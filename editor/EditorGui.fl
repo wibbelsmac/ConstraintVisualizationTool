@@ -1,0 +1,77 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0302 
+header_name {.h} 
+code_name {.cxx}
+class ConstrEditorUI {open
+} {
+  Function {ConstrEditorUI()} {open
+  } {
+    Fl_Window fileWindow {open
+      xywh {0 44 740 854} type Double resizable visible
+    } {
+      Fl_Text_Editor editor {selected
+        xywh {10 60 715 775} color 0 textcolor 55
+      }
+      Fl_Input find {
+        xywh {355 26 290 24}
+      }
+      Fl_Button {} {
+        label Search
+        xywh {655 30 63 20}
+      }
+      Fl_Menu_Bar menuBar {
+        label menuBar open
+        xywh {0 0 740 20}
+      } {
+        Submenu {} {
+          label File open
+          xywh {0 0 62 20}
+        } {
+          MenuItem {} {
+            label Open
+            xywh {0 0 31 20}
+          }
+          MenuItem {} {
+            label Save
+            xywh {0 0 31 20}
+          }
+          MenuItem {} {
+            label SaveAs
+            xywh {0 0 31 20}
+          }
+        }
+        Submenu {} {
+          label Constraint open
+          xywh {0 0 62 20}
+        } {
+          MenuItem {} {
+            label Add
+            xywh {0 0 31 20}
+          }
+          MenuItem {} {
+            label Search
+            xywh {0 0 31 20}
+          }
+        }
+        Submenu {} {
+          label Help open
+          xywh {0 0 62 20}
+        } {}
+      }
+    }
+    Fl_Window outputWindow {open
+      xywh {867 44 539 856} type Double resizable visible
+    } {
+      Fl_Text_Editor constrOutput {
+        label {Constraint Timing}
+        xywh {5 15 525 830} resizable hotspot
+      }
+    }
+  }
+  Function {show(int argc, char **argv)} {open
+  } {
+    code {printf("Hello, World This is Broken!\\n");
+fileWindow->show(argc, argv);
+outputWindow->show(argc, argv);} {}
+  }
+} 

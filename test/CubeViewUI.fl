@@ -1,0 +1,55 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0302 
+header_name {.h} 
+code_name {.cxx}
+class CubeViewUI {open
+} {
+  Function {CubeViewUI()} {open
+  } {
+    Fl_Window myWindow {
+      label myWindow open
+      private xywh {151 219 777 395} type Double resizable visible
+    } {
+      Fl_Roller {} {
+        label hrot
+        private xywh {130 255 105 15} type Horizontal
+      }
+      Fl_Roller {} {
+        label vrot
+        private xywh {0 65 15 145}
+      }
+      Fl_Slider {} {
+        label xpan
+        private xywh {90 235 185 20} type Horizontal
+      }
+      Fl_Slider {} {
+        label vpan
+        private xywh {15 45 20 200}
+      }
+      Fl_Value_Slider {} {
+        label zoom
+        private xywh {50 0 235 20} type Horizontal textsize 14
+      }
+      Fl_Box {} {
+        label cframe
+        private xywh {35 19 280 196}
+      }
+      Fl_Group {} {open
+        xywh {25 25 15 15}
+      } {}
+      Fl_Box cube {
+        label {This is the cube_view}
+        xywh {40 39 255 192}
+        code0 {\#include "CubeView.h"}
+        class CubeView
+      }
+    }
+  }
+  Function {show(int argc, char **argv)} {open
+  } {
+    code {myWindow->show(argc, argv);} {}
+  }
+} 
+
+Function {} {open
+} {} 
