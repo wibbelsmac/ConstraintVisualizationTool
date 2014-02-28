@@ -9,11 +9,11 @@
 #ifndef EditorBackEnd_h
 #define EditorBackEnd_h
 
-#include <FL/Fl.H>
-#include <FL/x.H>
+#include <FL/Fl.h>
+#include <FL/x.h>
 #include "EditorGui.h"
 #include <FL/fl_ask.H>
-#include <FL/Fl_Text_Editor.H>
+#include <FL/Fl_Text_Editor.h>
 #include <FL/Fl_File_Chooser.H>
 
 	

@@ -1,0 +1,35 @@
+DEBUG    = -g
+LINK     = $(CXX)
+FLTKCONFIG   = ./fltk-config
+CXX          = $(shell $(FLTKCONFIG) --cxx)
+CXXFLAGS     = $(shell $(FLTKCONFIG) --cxxflags) -Wall -I.
+LINKFLTK     = $(shell $(FLTKCONFIG) --ldstaticflags)
+LINKFLTK_GL  = $(shell $(FLTKCONFIG) --use-gl --ldstaticflags)
+LINKFLTK_IMG = $(shell $(FLTKCONFIG) --use-images --ldstaticflags)
+LINKFLTK_ALL = $(shell $(FLTKCONFIG) --use-images --use-gl --ldstaticflags)
+
+FLINCLUDES = -lpthread
+# Necessary gui libraries
+FLTKLIBS =		\
+	-lfltk_ext	\
+	-lfltk		\
+
+TARGET = editor
+OBJS = EditorMain.o EditorGui.o EditorBackEnd.o
+SRCS = EditorMain.cxx  EditorGui.cxx EditorBackEnd.cxx
+
+.SUFFIXES: .o .cxx
+%.o: %.cxx
+		$(CXX) $(CXXFLAGS) $(DEBUG) $(FLINCLUDES) -c $<
+
+all: $(TARGET)
+		$(LINK) -o $(TARGET) $(OBJS) $(LINKFLTK_ALL)
+
+$(TARGET): $(OBJS)
+EditorMain.o: EditorMain.cxx EditorGui.h EditorBackEnd.cxx
+EditorGui.o: EditorMain.cxx EditorBackEnd.cxx EditorGui.cxx
+EditorBackEnd.o: EditorBackEnd.cxx
+
+clean: $(TARGET) $(OBJS)
+		rm -f *.o 2> /dev/null
+		rm -f $(TARGET) 2> /dev/null
