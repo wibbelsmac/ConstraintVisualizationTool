@@ -18,7 +18,7 @@ void init (int argc, char **argv) {
     load_file(argv[1], 0);
   }
   edui = new ConstrEditorUI;
-  textbuf->add_modify_callback(myCallback, NULL);
+  //textbuf->add_modify_callback(myCallback, NULL);
   edui->editor->buffer(textbuf);
   edui->editor->add_key_binding(114, FL_CTRL,my_key_fun); // code for ctrl + R
   edui->editor->setClickHandler(&report_handler);
@@ -130,15 +130,15 @@ void saveas_cb(void) {
   newfile = fl_file_chooser("Save File As?", "*", filename);
   if (newfile != NULL) save_file(newfile);
 }
-void myCallback(int pos, int nInserted, int nDeleted,
-      int nRestyled, const char* deletedText,
-      void* cbArg) {
-  //if(edui->editor->event_clicks() != 0) {
-    int linenum = textbuf->count_lines(0, pos);
-    std::cout << "NEW Selection on line %d" << linenum << "\n";
-   // std::cout << "Key Pressed" <<Fl::event_key();
-  //}
-}
+// void myCallback(int pos, int nInserted, int nDeleted,
+//       int nRestyled, const char* deletedText,
+//       void* cbArg) {
+//   //if(edui->editor->event_clicks() != 0) {
+//     int linenum = textbuf->count_lines(0, pos);
+//     std::cout << "NEW Selection on line %d" << linenum << "\n";
+//    // std::cout << "Key Pressed" <<Fl::event_key();
+//   //}
+// }
 int my_key_fun (int key, Fl_Text_Editor *editor) {
   return 1;
 }
