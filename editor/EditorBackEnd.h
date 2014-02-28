@@ -38,5 +38,7 @@ void open_cstr_cb(Fl_Widget*, void*);
 void open_tcl_cb(Fl_Widget*, void*);
 int clck_handler (int event);
 int report_handler(std::string selection);
+void addPipeFiles(FILE* readPipeFile, FILE* writePipeFile);
+std::string SendShellCommand(const char* command);
 
 #endif

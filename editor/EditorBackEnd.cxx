@@ -9,11 +9,13 @@ char           title[256] = "";
 Fl_Text_Buffer *textbuf = 0;
 Fl_Text_Buffer *report_textbuf = 0;
 ConstrEditorUI *edui; 
+static FILE* _readPipeFile;
+static FILE* _writePipeFile;
 
 void init (int argc, char **argv) {
   textbuf = new Fl_Text_Buffer(1024, 128);
   report_textbuf = new Fl_Text_Buffer(1024, 128);
-  fl_alert("Argument Count %d with", argc);
+  //fl_alert("Argument Count %d with", argc);
   if(argc > 1) {
     load_file(argv[1], 0);
   }
@@ -28,6 +30,49 @@ void init (int argc, char **argv) {
   edui->show(argc, argv);
 
   
+}
+
+void addPipeFiles(FILE* readPipeFile, FILE* writePipeFile)
+{
+	_readPipeFile = readPipeFile;
+	_writePipeFile = writePipeFile;
+}
+
+std::string SendShellCommand(const char* command)
+{
+	char buf [300];
+	int first = 0;
+	std::string resultString;
+	if(strstr(command, "#"))
+	   return "You clicked on a comment constraint";
+	else if(strstr(command, ">>"))
+	   return "You clicked on a output to file line";
+	fprintf(_writePipeFile, "%s\n", command);
+	fflush(_writePipeFile);
+	fprintf(_writePipeFile, ".\n");
+	fflush(_writePipeFile);
+	
+	
+	while(fgets(buf, 1024, _readPipeFile))
+	{	
+		if(strstr(buf, "pt_shell>") && !first)
+		{
+			first = 1;
+			strncpy(buf, buf+10, strlen(buf));
+			resultString += buf;
+		
+		}
+		else if(strstr(buf, "pt_shell>") && first)
+		{
+			first = 0;
+			break;
+		}
+		else
+		{
+			resultString += buf;
+		}			
+	}
+	return resultString;
 }
 
 void load_file(char *newfile, int ipos) {
@@ -153,7 +198,10 @@ void add_cstr_cb(Fl_Widget *add_butt, void *data) {
 }
 int report_handler(std::string selection){
     // std::cout << "NOT FULLy IMPLEMENTED";
-    report_textbuf->text(selection.c_str());
+
+    //integrated with pt_shell
+    std::string report_text_str = SendShellCommand(selection.c_str());
+    report_textbuf->text(report_text_str.c_str());
   return 0;
 }
 

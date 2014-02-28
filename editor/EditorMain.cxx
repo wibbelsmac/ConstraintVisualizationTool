@@ -35,39 +35,6 @@
 #include "EditorBackEnd.h"
 using namespace std;
 
-string SendShellCommand(FILE* inputPipe, FILE* outputPipe, char* command)
-{
-	char buf [300];
-	int first = 0;
-	string resultString;
-	fprintf(inputPipe, "%s\n", command);
-	fflush(inputPipe);
-	fprintf(inputPipe, ".\n");
-	fflush(inputPipe);
-	
-	
-	while(fgets(buf, 1024, outputPipe))
-	{	
-		if(strstr(buf, "pt_shell>") && !first)
-		{
-			first = 1;
-			strncpy(buf, buf+10, strlen(buf));
-			resultString += buf;
-		
-		}
-		else if(strstr(buf, "pt_shell>") && first)
-		{
-			first = 0;
-			break;
-		}
-		else
-		{
-			resultString += buf;
-		}			
-	}
-	return resultString;
-}
-
 
 int main(int argc, char **argv) {
 
@@ -88,25 +55,26 @@ int main(int argc, char **argv) {
     if (pid) 
     {
 	//Parent
-	/*  wait till integration to uncomment and integrate
-	FILE* inputFile = fdopen(wpipe[1], "w");
-	FILE* outputFile = fdopen(rpipe[0], "r");
+	 //wait till integration to uncomment and integrate
+	FILE* writePipeFile = fdopen(wpipe[1], "w");
+	FILE* readPipeFile = fdopen(rpipe[0], "r");
 	char buf [1024];
-	char command[100];
+	//char command[100];
 	close(wpipe[0]);
 	close(rpipe[1]);
 	for(int start = 0; start < 10; start++)
 	{
-		fgets(buf, 1024, outputFile);
+		fgets(buf, 1024, readPipeFile);
 	}
 	//TODO: Change the run loop function under
-	while(1)
-	{
-		cin.getline(command,100);
-		printf("Output:%s", SendShellCommand(inputFile, outputFile, command).c_str());	
-	}	
-	*/
+	//while(1)
+	//{
+	//	cin.getline(command,100);
+	//	printf("Output:%s", SendShellCommand(inputFile, outputFile, command).c_str());	
+	//}	
+	
 	init(argc, argv);
+	addPipeFiles(readPipeFile, writePipeFile);
 	return Fl::run();
     } 
     else 
