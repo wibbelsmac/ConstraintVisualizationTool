@@ -32,4 +32,5 @@ EditorBackEnd.o: EditorBackEnd.cxx
 
 clean: $(TARGET) $(OBJS)
 		rm -f *.o 2> /dev/null
+		rm -f *~ 2> /dev/null
 		rm -f $(TARGET) 2> /dev/null

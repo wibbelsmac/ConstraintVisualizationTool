@@ -88,6 +88,7 @@ int main(int argc, char **argv) {
     if (pid) 
     {
 	//Parent
+	/*  wait till integration to uncomment and integrate
 	FILE* inputFile = fdopen(wpipe[1], "w");
 	FILE* outputFile = fdopen(rpipe[0], "r");
 	char buf [1024];
@@ -98,14 +99,13 @@ int main(int argc, char **argv) {
 	{
 		fgets(buf, 1024, outputFile);
 	}
-	/*****************************************************************************/
 	//TODO: Change the run loop function under
-	/*****************************************************************************/
 	while(1)
 	{
 		cin.getline(command,100);
 		printf("Output:%s", SendShellCommand(inputFile, outputFile, command).c_str());	
 	}	
+	*/
 	init(argc, argv);
 	return Fl::run();
     } 
