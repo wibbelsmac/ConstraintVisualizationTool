@@ -35,10 +35,18 @@ Fl_Menu_Item ConstrEditorUI::menu_menuBar[] = {
 ConstrEditorUI::ConstrEditorUI() {
   { fileWindow = new Fl_Double_Window(740, 854);
     fileWindow->user_data((void*)(this));
-    { editor = new Fl_Text_Editor(10, 60, 715, 775);
-      editor->color(FL_FOREGROUND_COLOR);
-      editor->textcolor((Fl_Color)55);
-    } // Fl_Text_Editor* editor
+    { editor = new ConstrTextEditor(10, 60, 715, 775);
+      editor->box(FL_DOWN_FRAME);
+      editor->color((Fl_Color)34);
+      editor->selection_color(FL_SELECTION_COLOR);
+      editor->labeltype(FL_NORMAL_LABEL);
+      editor->labelfont(0);
+      editor->labelsize(14);
+      editor->labelcolor(FL_FOREGROUND_COLOR);
+      editor->textcolor((Fl_Color)71);
+      editor->align(Fl_Align(FL_ALIGN_TOP));
+      editor->when(FL_WHEN_RELEASE);
+    } // ConstrTextEditor* editor
     { find = new Fl_Input(355, 26, 290, 24);
     } // Fl_Input* find
     { new Fl_Button(655, 30, 63, 20, "Search");
@@ -53,10 +61,10 @@ ConstrEditorUI::ConstrEditorUI() {
   } // Fl_Double_Window* fileWindow
   { outputWindow = new Fl_Double_Window(539, 856);
     outputWindow->user_data((void*)(this));
-    { constrOutput = new Fl_Text_Editor(5, 15, 525, 830, "Constraint Timing");
-      Fl_Group::current()->resizable(constrOutput);
-      constrOutput->window()->hotspot(constrOutput);
-    } // Fl_Text_Editor* constrOutput
+    { constr_output = new Fl_Text_Display(15, 5, 510, 845);
+      Fl_Group::current()->resizable(constr_output);
+      constr_output->window()->hotspot(constr_output);
+    } // Fl_Text_Display* constr_output
     outputWindow->end();
   } // Fl_Double_Window* outputWindow
   { constr_add_window = new Fl_Double_Window(390, 144, "constr_add_window");

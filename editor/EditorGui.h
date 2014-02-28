@@ -5,19 +5,20 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Double_Window.H>
 #include "EditorBackEnd.h"
-#include <FL/Fl_Text_Editor.H>
+#include "Constr_Text_Editor.h"
 #include <FL/Fl_Input.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Menu_Bar.H>
 extern void open_cstr_cb(Fl_Menu_*, void*);
 extern void open_tcl_cb(Fl_Menu_*, void*);
+#include <FL/Fl_Text_Display.H>
 extern void add_cstr_cb(Fl_Button*, void*);
 
 class ConstrEditorUI {
 public:
   ConstrEditorUI();
   Fl_Double_Window *fileWindow;
-  Fl_Text_Editor *editor;
+  ConstrTextEditor *editor;
   Fl_Input *find;
   Fl_Menu_Bar *menuBar;
   static Fl_Menu_Item menu_menuBar[];
@@ -28,7 +29,7 @@ private:
   static void cb_SaveAs(Fl_Menu_*, void*);
 public:
   Fl_Double_Window *outputWindow;
-  Fl_Text_Editor *constrOutput;
+  Fl_Text_Display *constr_output;
   Fl_Double_Window *constr_add_window;
   Fl_Input *from_pin_box;
   Fl_Input *to_pin_box;

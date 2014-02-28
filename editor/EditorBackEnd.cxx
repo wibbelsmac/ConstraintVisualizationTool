@@ -1,15 +1,18 @@
 #include "EditorBackEnd.h"
 #include <iostream>
 
+
 int loading = 0;
 int            changed = 0;
 char           filename[256] = "";
 char           title[256] = "";
 Fl_Text_Buffer *textbuf = 0;
+Fl_Text_Buffer *report_textbuf = 0;
 ConstrEditorUI *edui; 
 
 void init (int argc, char **argv) {
   textbuf = new Fl_Text_Buffer(1024, 128);
+  report_textbuf = new Fl_Text_Buffer(1024, 128);
   fl_alert("Argument Count %d with", argc);
   if(argc > 1) {
     load_file(argv[1], 0);
@@ -18,9 +21,10 @@ void init (int argc, char **argv) {
   textbuf->add_modify_callback(myCallback, NULL);
   edui->editor->buffer(textbuf);
   edui->editor->add_key_binding(114, FL_CTRL,my_key_fun); // code for ctrl + R
+  edui->editor->setClickHandler(&report_handler);
+  edui->constr_output->buffer(report_textbuf);
   //Initial global objects.  
   Fl::visual(FL_DOUBLE|FL_INDEX);
-
   edui->show(argc, argv);
 
   
@@ -147,3 +151,10 @@ void add_cstr_cb(Fl_Widget *add_butt, void *data) {
   // }
   std::cout << "NOT FULLy IMPLEMENTED";
 }
+int report_handler(std::string selection){
+    // std::cout << "NOT FULLy IMPLEMENTED";
+    report_textbuf->text(selection.c_str());
+  return 0;
+}
+
+

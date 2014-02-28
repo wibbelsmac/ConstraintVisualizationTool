@@ -7,11 +7,13 @@ class ConstrEditorUI {open
   Function {ConstrEditorUI()} {open
   } {
     Fl_Window fileWindow {open
-      xywh {264 44 740 854} type Double resizable
-      code0 {\#include "EditorBackEnd.h"} visible
+      xywh {744 44 740 854} type Double resizable
+      code0 {\#include "EditorBackEnd.h"}
+      code1 {\#include "Constr_Text_Editor.h"} visible
     } {
-      Fl_Text_Editor editor {selected
-        xywh {10 60 715 775} color 0 textcolor 55
+      Fl_Text_Editor editor {
+        xywh {10 60 715 775} color 34 textcolor 71
+        class ConstrTextEditor
       }
       Fl_Input find {
         xywh {355 26 290 24}
@@ -25,7 +27,7 @@ class ConstrEditorUI {open
         xywh {0 0 740 20}
       } {
         Submenu {} {
-          label File open
+          label File
           xywh {0 0 62 20}
         } {
           MenuItem {} {
@@ -72,12 +74,11 @@ class ConstrEditorUI {open
         xywh {180 25 160 25}
       }
     }
-    Fl_Window outputWindow {open
-      xywh {867 44 539 856} type Double resizable visible
+    Fl_Window outputWindow {
+      xywh {176 44 539 856} type Double resizable visible
     } {
-      Fl_Text_Editor constrOutput {
-        label {Constraint Timing}
-        xywh {5 15 525 830} resizable hotspot
+      Fl_Text_Display constr_output {selected
+        xywh {15 5 510 845} resizable hotspot
       }
     }
     Fl_Window constr_add_window {

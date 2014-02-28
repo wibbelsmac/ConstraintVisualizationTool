@@ -15,6 +15,7 @@
 #include <FL/fl_ask.H>
 #include <FL/Fl_Text_Editor.H>
 #include <FL/Fl_File_Chooser.H>
+#include <string>
 
 	
 void load_file(char *newfile, int ipos);
@@ -35,6 +36,7 @@ int my_key_fun (int key, Fl_Text_Editor *editor);
 void add_cstr_cb(Fl_Widget *add_butt, void *data);
 void open_cstr_cb(Fl_Widget*, void*);
 void open_tcl_cb(Fl_Widget*, void*);
-
+int clck_handler (int event);
+int report_handler(std::string selection);
 
 #endif

@@ -6,8 +6,8 @@ LDSTATIC = $(shell fltk-config --use-gl --use-images --ldstaticflags )
 LINK     = $(CXX)
 
 TARGET = editor
-OBJS = EditorMain.o EditorGui.o EditorBackEnd.o
-SRCS = EditorMain.cxx  EditorGui.cxx EditorBackEnd.cxx
+OBJS = EditorMain.o EditorGui.o EditorBackEnd.o Constr_Text_Editor.o
+SRCS = EditorMain.cxx  EditorGui.cxx EditorBackEnd.cxx Constr_Text_Editor.cxx
 
 .SUFFIXES: .o .cxx
 %.o: %.cxx
@@ -19,8 +19,8 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 EditorMain.o: EditorMain.cxx EditorGui.h EditorBackEnd.cxx
 EditorBackEnd.o: EditorBackEnd.cxx EditorGui.cxx
-EditorGui.o: EditorMain.cxx EditorGui.cxx
-
+EditorGui.o: EditorMain.cxx EditorGui.cxx Constr_Text_Editor.cxx
+Constr_Text_Editor.o: Constr_Text_Editor.cxx Constr_Text_Editor.h
 
 clean: $(TARGET) $(OBJS)
 		rm -f *.o 2> /dev/null
