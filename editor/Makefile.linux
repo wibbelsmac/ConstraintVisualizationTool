@@ -8,7 +8,7 @@ LINKFLTK_GL  = $(shell $(FLTKCONFIG) --use-gl --ldstaticflags)
 LINKFLTK_IMG = $(shell $(FLTKCONFIG) --use-images --ldstaticflags)
 LINKFLTK_ALL = $(shell $(FLTKCONFIG) --use-images --use-gl --ldstaticflags)
 
-FLINCLUDES = -lpthread
+FLINCLUDES = 
 # Necessary gui libraries
 FLTKLIBS =		\
 	-lfltk_ext	\
