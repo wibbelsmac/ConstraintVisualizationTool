@@ -17,11 +17,13 @@ void init (int argc, char **argv) {
   edui = new ConstrEditorUI;
   textbuf->add_modify_callback(myCallback, NULL);
   edui->editor->buffer(textbuf);
+  edui->editor->add_key_binding(114, FL_CTRL,my_key_fun); // code for ctrl + R
   //Initial global objects.  
   Fl::visual(FL_DOUBLE|FL_INDEX);
 
   edui->show(argc, argv);
 
+  
 }
 
 void load_file(char *newfile, int ipos) {
@@ -48,11 +50,15 @@ void changed_cb(int, int nInserted, int nDeleted,int, const char*, void* v) {
     w->editor->show_insert_position();
 }
 
-void open_cb(Fl_Widget*, void*) {
+void open_cstr_cb(Fl_Widget*, void*) {
   if (!check_save()) return;
 
   char *newfile = fl_file_chooser("Open File?", "*", filename);
   if (newfile != NULL) load_file(newfile, -1);
+}
+
+void open_tcl_cb(Fl_Widget*, void*) {
+  std::cout << "Not implemented";
 }
 
 void paste_cb(Fl_Widget*, void* v) {
@@ -123,6 +129,21 @@ void saveas_cb(void) {
 void myCallback(int pos, int nInserted, int nDeleted,
       int nRestyled, const char* deletedText,
       void* cbArg) {
-  int linenum = textbuf->count_lines(0, pos);
-  std::cout << "NEW Selection on line %d" << linenum << "\n";
+  //if(edui->editor->event_clicks() != 0) {
+    int linenum = textbuf->count_lines(0, pos);
+    std::cout << "NEW Selection on line %d" << linenum << "\n";
+   // std::cout << "Key Pressed" <<Fl::event_key();
+  //}
+}
+int my_key_fun (int key, Fl_Text_Editor *editor) {
+  return 1;
+}
+
+void add_cstr_cb(Fl_Widget *add_butt, void *data) {
+  // if(edui->constr_add_window->minORmax == 1) {
+  //   std:: cout << "setmaxdelay -from" << edui->from_pin_box->value() << " -to " << edui->to_pin_box->value() << "\n";
+  // } else {
+  //   std:: cout << "setmindelay -from" << edui->from_pin_box->value() << " -to " << edui->to_pin_box->value() << "\n";
+  // }
+  std::cout << "NOT FULLy IMPLEMENTED";
 }

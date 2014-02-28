@@ -18,8 +18,9 @@ all: $(TARGET)
 
 $(TARGET): $(OBJS)
 EditorMain.o: EditorMain.cxx EditorGui.h EditorBackEnd.cxx
-EditorGui.o: EditorMain.cxx EditorBackEnd.cxx EditorGui.cxx
-EditorBackEnd.o: EditorBackEnd.cxx
+EditorBackEnd.o: EditorBackEnd.cxx EditorGui.cxx
+EditorGui.o: EditorMain.cxx EditorGui.cxx
+
 
 clean: $(TARGET) $(OBJS)
 		rm -f *.o 2> /dev/null

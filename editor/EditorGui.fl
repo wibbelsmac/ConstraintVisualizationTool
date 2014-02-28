@@ -7,7 +7,8 @@ class ConstrEditorUI {open
   Function {ConstrEditorUI()} {open
   } {
     Fl_Window fileWindow {open
-      xywh {0 44 740 854} type Double resizable visible
+      xywh {264 44 740 854} type Double resizable
+      code0 {\#include "EditorBackEnd.h"} visible
     } {
       Fl_Text_Editor editor {selected
         xywh {10 60 715 775} color 0 textcolor 55
@@ -28,16 +29,24 @@ class ConstrEditorUI {open
           xywh {0 0 62 20}
         } {
           MenuItem {} {
-            label Open
+            label {Open .cstr}
+            callback open_cstr_cb
             xywh {0 0 31 20}
+          }
+          MenuItem {} {
+            label {Open .tcl}
+            callback open_tcl_cb
+            xywh {5 5 31 20}
           }
           MenuItem {} {
             label Save
-            xywh {0 0 31 20}
+            callback {save_cb();}
+            xywh {5 5 31 20}
           }
           MenuItem {} {
             label SaveAs
-            xywh {0 0 31 20}
+            callback {saveas_cb();}
+            xywh {5 5 31 20}
           }
         }
         Submenu {} {
@@ -45,11 +54,11 @@ class ConstrEditorUI {open
           xywh {0 0 62 20}
         } {
           MenuItem {} {
-            label Add
+            label {Add Max Delay}
             xywh {0 0 31 20}
           }
           MenuItem {} {
-            label Search
+            label {Add Min Delay}
             xywh {0 0 31 20}
           }
         }
@@ -57,6 +66,10 @@ class ConstrEditorUI {open
           label Help open
           xywh {0 0 62 20}
         } {}
+      }
+      Fl_Button {} {
+        label {Report Selected (Ctrl+r)}
+        xywh {180 25 160 25}
       }
     }
     Fl_Window outputWindow {open
@@ -67,11 +80,33 @@ class ConstrEditorUI {open
         xywh {5 15 525 830} resizable hotspot
       }
     }
+    Fl_Window constr_add_window {
+      label constr_add_window open
+      xywh {264 300 390 144} type Double
+      code0 {int minORmax = 0;} visible
+    } {
+      Fl_Input from_pin_box {
+        label {-from pin}
+        xywh {65 46 270 27}
+      }
+      Fl_Input to_pin_box {
+        label {-to Pin}
+        xywh {65 81 270 24}
+      }
+      Fl_Button {} {
+        label {Add Constraint}
+        callback add_cstr_cb
+        xywh {75 110 208 20}
+      }
+      Fl_Input delay_box {
+        label Delay
+        xywh {65 16 270 24}
+      }
+    }
   }
   Function {show(int argc, char **argv)} {open
   } {
-    code {printf("Hello, World This is Broken!\\n");
-fileWindow->show(argc, argv);
+    code {fileWindow->show(argc, argv);
 outputWindow->show(argc, argv);} {}
   }
 } 

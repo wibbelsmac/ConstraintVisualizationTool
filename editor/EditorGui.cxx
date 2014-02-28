@@ -2,14 +2,30 @@
 
 #include "EditorGui.h"
 
+void ConstrEditorUI::cb_Save_i(Fl_Menu_*, void*) {
+  save_cb();
+}
+void ConstrEditorUI::cb_Save(Fl_Menu_* o, void* v) {
+  ((ConstrEditorUI*)(o->parent()->user_data()))->cb_Save_i(o,v);
+}
+
+void ConstrEditorUI::cb_SaveAs_i(Fl_Menu_*, void*) {
+  saveas_cb();
+}
+void ConstrEditorUI::cb_SaveAs(Fl_Menu_* o, void* v) {
+  ((ConstrEditorUI*)(o->parent()->user_data()))->cb_SaveAs_i(o,v);
+}
+
 Fl_Menu_Item ConstrEditorUI::menu_menuBar[] = {
  {"File", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
- {"Open", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"Save", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Open .cstr", 0,  (Fl_Callback*)open_cstr_cb, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Open .tcl", 0,  (Fl_Callback*)open_tcl_cb, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Save", 0,  (Fl_Callback*)ConstrEditorUI::cb_Save, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"SaveAs", 0,  (Fl_Callback*)ConstrEditorUI::cb_SaveAs, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"Constraint", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
- {"Add", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"Search", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Add Max Delay", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"Add Min Delay", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"Help", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
@@ -30,6 +46,8 @@ ConstrEditorUI::ConstrEditorUI() {
     { menuBar = new Fl_Menu_Bar(0, 0, 740, 20, "menuBar");
       menuBar->menu(menu_menuBar);
     } // Fl_Menu_Bar* menuBar
+    { new Fl_Button(180, 25, 160, 25, "Report Selected (Ctrl+r)");
+    } // Fl_Button* o
     fileWindow->end();
     fileWindow->resizable(fileWindow);
   } // Fl_Double_Window* fileWindow
@@ -41,10 +59,23 @@ ConstrEditorUI::ConstrEditorUI() {
     } // Fl_Text_Editor* constrOutput
     outputWindow->end();
   } // Fl_Double_Window* outputWindow
+  { constr_add_window = new Fl_Double_Window(390, 144, "constr_add_window");
+    constr_add_window->user_data((void*)(this));
+    { from_pin_box = new Fl_Input(65, 46, 270, 27, "-from pin");
+    } // Fl_Input* from_pin_box
+    { to_pin_box = new Fl_Input(65, 81, 270, 24, "-to Pin");
+    } // Fl_Input* to_pin_box
+    { Fl_Button* o = new Fl_Button(75, 110, 208, 20, "Add Constraint");
+      o->callback((Fl_Callback*)add_cstr_cb);
+    } // Fl_Button* o
+    { delay_box = new Fl_Input(65, 16, 270, 24, "Delay");
+    } // Fl_Input* delay_box
+    int minORmax = 0;
+    constr_add_window->end();
+  } // Fl_Double_Window* constr_add_window
 }
 
 void ConstrEditorUI::show(int argc, char **argv) {
-  printf("Hello, World This is Broken!\n");
   fileWindow->show(argc, argv);
   outputWindow->show(argc, argv);
 }

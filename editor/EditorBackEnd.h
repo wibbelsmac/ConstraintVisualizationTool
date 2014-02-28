@@ -11,7 +11,7 @@
 
 #include <FL/Fl.h>
 #include <FL/x.h>
-#include "editorgui.h"
+#include "EditorGui.h"
 #include <FL/fl_ask.H>
 #include <FL/Fl_Text_Editor.h>
 #include <FL/Fl_File_Chooser.H>
@@ -31,5 +31,10 @@ void init (int argc, char **argv);
 void myCallback(int pos, int nInserted, int nDeleted,
       int nRestyled, const char* deletedText,
       void* cbArg);
+int my_key_fun (int key, Fl_Text_Editor *editor);
+void add_cstr_cb(Fl_Widget *add_butt, void *data);
+void open_cstr_cb(Fl_Widget*, void*);
+void open_tcl_cb(Fl_Widget*, void*);
+
 
 #endif
