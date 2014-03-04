@@ -23,10 +23,6 @@ Fl_Menu_Item ConstrEditorUI::menu_menuBar[] = {
  {"Save", 0,  (Fl_Callback*)ConstrEditorUI::cb_Save, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {"SaveAs", 0,  (Fl_Callback*)ConstrEditorUI::cb_SaveAs, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
- {"Constraint", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
- {"Add Max Delay", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"Add Min Delay", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {0,0,0,0,0,0,0,0,0},
  {"Help", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {0,0,0,0,0,0,0,0,0}
@@ -35,7 +31,7 @@ Fl_Menu_Item ConstrEditorUI::menu_menuBar[] = {
 ConstrEditorUI::ConstrEditorUI() {
   { fileWindow = new Fl_Double_Window(740, 854);
     fileWindow->user_data((void*)(this));
-    { editor = new ConstrTextEditor(10, 60, 715, 775);
+    { editor = new ConstrTextEditor(10, 60, 715, 725);
       editor->box(FL_DOWN_FRAME);
       editor->color((Fl_Color)34);
       editor->selection_color(FL_SELECTION_COLOR);
@@ -47,15 +43,14 @@ ConstrEditorUI::ConstrEditorUI() {
       editor->align(Fl_Align(FL_ALIGN_TOP));
       editor->when(FL_WHEN_RELEASE);
     } // ConstrTextEditor* editor
-    { find = new Fl_Input(355, 26, 290, 24);
-    } // Fl_Input* find
+    { find_box = new Fl_Input(355, 26, 290, 24);
+      find_box->callback((Fl_Callback*)search_box_callback);
+    } // Fl_Input* find_box
     { new Fl_Button(655, 30, 63, 20, "Search");
     } // Fl_Button* o
     { menuBar = new Fl_Menu_Bar(0, 0, 740, 20, "menuBar");
       menuBar->menu(menu_menuBar);
     } // Fl_Menu_Bar* menuBar
-    { new Fl_Button(180, 25, 160, 25, "Report Selected (Ctrl+r)");
-    } // Fl_Button* o
     fileWindow->end();
     fileWindow->resizable(fileWindow);
   } // Fl_Double_Window* fileWindow

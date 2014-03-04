@@ -6,7 +6,9 @@
 #include <FL/Fl_Double_Window.H>
 #include "EditorBackEnd.h"
 #include "Constr_Text_Editor.h"
+#include "PTShellInput.h"
 #include <FL/Fl_Input.H>
+extern void search_box_callback(Fl_Input*, void*);
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Menu_Bar.H>
 extern void open_cstr_cb(Fl_Menu_*, void*);
@@ -19,7 +21,7 @@ public:
   ConstrEditorUI();
   Fl_Double_Window *fileWindow;
   ConstrTextEditor *editor;
-  Fl_Input *find;
+  Fl_Input *find_box;
   Fl_Menu_Bar *menuBar;
   static Fl_Menu_Item menu_menuBar[];
 private:
