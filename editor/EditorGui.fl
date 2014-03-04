@@ -7,15 +7,17 @@ class ConstrEditorUI {open
   Function {ConstrEditorUI()} {open
   } {
     Fl_Window fileWindow {open
-      xywh {744 44 740 854} type Double resizable
+      xywh {261 44 740 854} type Double resizable
       code0 {\#include "EditorBackEnd.h"}
-      code1 {\#include "Constr_Text_Editor.h"} visible
+      code1 {\#include "Constr_Text_Editor.h"}
+      code2 {\#include "PTShellInput.h"} visible
     } {
       Fl_Text_Editor editor {
-        xywh {10 60 715 775} color 34 textcolor 71
+        xywh {10 60 715 725} color 34 textcolor 71
         class ConstrTextEditor
       }
-      Fl_Input find {
+      Fl_Input find_box {
+        callback search_box_callback selected
         xywh {355 26 290 24}
       }
       Fl_Button {} {
@@ -52,32 +54,15 @@ class ConstrEditorUI {open
           }
         }
         Submenu {} {
-          label Constraint open
-          xywh {0 0 62 20}
-        } {
-          MenuItem {} {
-            label {Add Max Delay}
-            xywh {0 0 31 20}
-          }
-          MenuItem {} {
-            label {Add Min Delay}
-            xywh {0 0 31 20}
-          }
-        }
-        Submenu {} {
           label Help open
           xywh {0 0 62 20}
         } {}
-      }
-      Fl_Button {} {
-        label {Report Selected (Ctrl+r)}
-        xywh {180 25 160 25}
       }
     }
     Fl_Window outputWindow {
       xywh {176 44 539 856} type Double resizable visible
     } {
-      Fl_Text_Display constr_output {selected
+      Fl_Text_Display constr_output {
         xywh {15 5 510 845} resizable hotspot
       }
     }

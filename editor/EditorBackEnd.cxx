@@ -1,6 +1,7 @@
 #include "EditorBackEnd.h"
 #include <sstream>
 #include <iostream>
+#include <fstream>
 
 
 int loading = 0;
@@ -33,7 +34,10 @@ void init (int argc, char **argv) {
   edui->editor->add_key_binding(114, FL_CTRL,my_key_fun); // code for ctrl + R
   edui->editor->setClickHandler(&report_handler);
   edui->constr_output->buffer(report_textbuf);
-  //Initial global objects.  
+  //Initial global objects.
+  edui->fileWindow->label("Mac and Willies DC Puppet");
+  edui->outputWindow->label("Mac and Willies DC Puppet");  
+  edui->find_box->when(FL_WHEN_CHANGED);
   Fl::visual(FL_DOUBLE|FL_INDEX);
   edui->show(argc, argv);
 
@@ -93,12 +97,21 @@ void load_file(char *newfile, int ipos) {
   changed = insert;
   if (!insert) strcpy(filename, "");
   int r;
-  if (!insert) r = textbuf->loadfile(newfile);
-  else r = textbuf->insertfile(newfile, ipos);
-  if (r)
+  if (!insert) {
+      r = textbuf->loadfile(newfile);
+  } else {
+    r = textbuf->insertfile(newfile, ipos);
+    // std::ifstream is (newfile, std::ifstream::binary);
+    // if (is) {
+    //   constr_file_text = std::string(is.beg, is.end);
+    // }
+    
+  }
+  if (r) {
     fl_alert("Error reading from file \'%s\':\n%s.", newfile, strerror(r));
-  else
-    if (!insert) strcpy(filename, newfile);
+  } else if (!insert) {
+    strcpy(filename, newfile);
+  }
   loading = 0;
   textbuf->call_modify_callbacks();
 }
@@ -187,15 +200,31 @@ void saveas_cb(void) {
   newfile = fl_file_chooser("Save File As?", "*", filename);
   if (newfile != NULL) save_file(newfile);
 }
-// void myCallback(int pos, int nInserted, int nDeleted,
-//       int nRestyled, const char* deletedText,
-//       void* cbArg) {
-//   //if(edui->editor->event_clicks() != 0) {
-//     int linenum = textbuf->count_lines(0, pos);
-//     std::cout << "NEW Selection on line %d" << linenum << "\n";
-//    // std::cout << "Key Pressed" <<Fl::event_key();
-//   //}
-// }
+void search_box_callback(Fl_Widget *, void *) {
+
+  std::cout << "in callback" << std::endl;
+  for(int i = 0; i <= textbuf->length(); i++) {
+    char* line_text = textbuf->line_text(i);
+    
+    if(strstr(line_text, edui->find_box->value())) {
+      std::cout << "line Text: " << line_text << std::endl;  
+    } else {
+      textbuf->skip_displayed_characters(i, strlen(line_text));
+      textbuf->call_modify_callbacks ();
+    }
+    i += strlen(line_text) + 1;
+  }
+}
+
+void myCallback(int pos, int nInserted, int nDeleted,
+      int nRestyled, const char* deletedText,
+      void* cbArg) {
+  //if(edui->editor->event_clicks() != 0) {
+    int linenum = textbuf->count_lines(0, pos);
+    std::cout << "NEW Selection on line %d" << linenum << "\n";
+   // std::cout << "Key Pressed" <<Fl::event_key();
+  //}
+}
 int my_key_fun (int key, Fl_Text_Editor *editor) {
   return 1;
 }
