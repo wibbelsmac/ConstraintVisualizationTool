@@ -39,7 +39,7 @@ void open_tcl_cb(Fl_Widget*, void*);
 int clck_handler (int event);
 int report_handler(std::string selection);
 void addPipeFiles(FILE* readPipeFile, FILE* writePipeFile);
-std::string SendShellCommand(const char* command);
+std::string SendShellCommand(const char* command, int commandCount);
 void search_box_callback(Fl_Widget *, void *);
 
 //static std::string constr_file_text;

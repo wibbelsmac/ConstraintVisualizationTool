@@ -13,7 +13,7 @@ Fl_Text_Buffer *report_textbuf = 0;
 ConstrEditorUI *edui; 
 static FILE* _readPipeFile;
 static FILE* _writePipeFile;
-static char* _setupFile;
+static std::string _setupCommand = "";
 
 void init (int argc, char **argv) {
   textbuf = new Fl_Text_Buffer(1024, 128);
@@ -22,10 +22,13 @@ void init (int argc, char **argv) {
   if(argc > 1) {
     load_file(argv[1], 0);
 	//Load in setup tcl script
-    if(argc == 2)
-    {
-	_setupFile = argv[2];
-    }
+   
+	if(argc == 3)
+	{
+		_setupCommand = "source ";
+		_setupCommand += argv[2];
+		_setupCommand += "\n";
+	}
     
   }
   edui = new ConstrEditorUI;
@@ -44,13 +47,16 @@ void init (int argc, char **argv) {
   Fl::visual(FL_DOUBLE|FL_INDEX);
   edui->show(argc, argv);
 
-  
 }
 
 void addPipeFiles(FILE* readPipeFile, FILE* writePipeFile)
 {
 	_readPipeFile = readPipeFile;
 	_writePipeFile = writePipeFile;
+	if(!_setupCommand.empty())
+	{
+		SendShellCommand(_setupCommand.c_str(), 1);
+	}
 }
 
 std::string SendShellCommand(const char* command, int commandCount)
@@ -275,9 +281,9 @@ int report_handler(std::string selection){
 	}
 	
     }
-    if(commandString == "")
+    if(commandString.empty())
     {
-	commandString = "#";
+	commandString = "#\n";
     }
 	//std::cout << "Laste characters are " << commandString[commandString.length()-2] <
     if( commandString.compare(commandString.length()-2,1,"\\") == 0)
