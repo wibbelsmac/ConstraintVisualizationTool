@@ -35,7 +35,10 @@ void init (int argc, char **argv) {
   edui->editor->setClickHandler(&report_handler);
   edui->constr_output->buffer(report_textbuf);
   //Initial global objects.
-  edui->fileWindow->label("Mac and Willies DC Puppet");
+  if(argc > 1)	
+  	edui->fileWindow->label(argv[1]);
+  else
+	edui->fileWindow->label("No file loaded");
   edui->outputWindow->label("Mac and Willies DC Puppet");  
   edui->find_box->when(FL_WHEN_CHANGED);
   Fl::visual(FL_DOUBLE|FL_INDEX);
@@ -59,6 +62,8 @@ std::string SendShellCommand(const char* command, int commandCount)
 	   return "You clicked on a comment constraint";
 	else if(strstr(command, ">>"))
 	   return "You clicked on a output to file line";
+
+	std::cout << "Command sent to pt_shell " << command << "\n";
 	fprintf(_writePipeFile, "%s", command);
 	fflush(_writePipeFile);
 	fprintf(_writePipeFile, ".\n");
@@ -67,12 +72,13 @@ std::string SendShellCommand(const char* command, int commandCount)
 	
 	while(fgets(buf, 1024, _readPipeFile))
 	{	
+		std::cout << buf;
 		if(strstr(buf, "pt_shell>") && !first)
 		{
 			strncpy(buf, buf+10, strlen(buf));
 			resultString += buf;
 			commandCount--;
-			printf("Count =%d", commandCount);
+			//printf("Count =%d", commandCount);
 			if(commandCount == 0)
 				first = 1;
 			
@@ -86,7 +92,7 @@ std::string SendShellCommand(const char* command, int commandCount)
 		{
 			resultString += buf;
 		}	
-		std::cout << buf;
+		//std::cout << buf;
 	}
 	return resultString;
 }
@@ -237,10 +243,7 @@ void add_cstr_cb(Fl_Widget *add_butt, void *data) {
   // }
   std::cout << "NOT FULLy IMPLEMENTED";
 }
-int report_handler(std::string selection){
-
-    //remove comment lines
-    
+int report_handler(std::string selection){    
     std::istringstream iss;
     iss.str(selection);
     std::string line;
@@ -250,14 +253,37 @@ int report_handler(std::string selection){
     {
 	if(line.find("#") == std::string::npos && line != "")
 	{
-		commandString += line;
+		if(line.find("set_max_delay") != std::string::npos)
+		{
+			size_t next_space = line.find(" ", 14);
+			line.replace(0, next_space, "report_timing -delay max ");
+			commandString += line;
+		}
+		else if(line.find("set_min_delay") != std::string::npos)
+		{
+			size_t next_space = line.find(" ", 14);
+			line.replace(0, next_space, "report_timing -delay min ");
+			commandString += line;
+		}
+		else
+		{
+			commandString += line;
+		}
+
 		commandString += "\n";
 		commandCount++;
 	}
+	
     }
     if(commandString == "")
     {
 	commandString = "#";
+    }
+	//std::cout << "Laste characters are " << commandString[commandString.length()-2] <
+    if( commandString.compare(commandString.length()-2,1,"\\") == 0)
+    {
+	report_textbuf->text("Please enter complete command\n");
+	return 0;
     }
     //integrated with pt_shell
     std::string report_text_str = SendShellCommand(commandString.c_str(), commandCount);
