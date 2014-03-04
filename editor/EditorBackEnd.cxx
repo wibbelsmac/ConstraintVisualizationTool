@@ -1,4 +1,5 @@
 #include "EditorBackEnd.h"
+#include <sstream>
 #include <iostream>
 
 
@@ -11,6 +12,7 @@ Fl_Text_Buffer *report_textbuf = 0;
 ConstrEditorUI *edui; 
 static FILE* _readPipeFile;
 static FILE* _writePipeFile;
+static char* _setupFile;
 
 void init (int argc, char **argv) {
   textbuf = new Fl_Text_Buffer(1024, 128);
@@ -18,6 +20,12 @@ void init (int argc, char **argv) {
   //fl_alert("Argument Count %d with", argc);
   if(argc > 1) {
     load_file(argv[1], 0);
+	//Load in setup tcl script
+    if(argc == 2)
+    {
+	_setupFile = argv[2];
+    }
+    
   }
   edui = new ConstrEditorUI;
   //textbuf->add_modify_callback(myCallback, NULL);
@@ -38,7 +46,7 @@ void addPipeFiles(FILE* readPipeFile, FILE* writePipeFile)
 	_writePipeFile = writePipeFile;
 }
 
-std::string SendShellCommand(const char* command)
+std::string SendShellCommand(const char* command, int commandCount)
 {
 	char buf [300];
 	int first = 0;
@@ -47,7 +55,7 @@ std::string SendShellCommand(const char* command)
 	   return "You clicked on a comment constraint";
 	else if(strstr(command, ">>"))
 	   return "You clicked on a output to file line";
-	fprintf(_writePipeFile, "%s\n", command);
+	fprintf(_writePipeFile, "%s", command);
 	fflush(_writePipeFile);
 	fprintf(_writePipeFile, ".\n");
 	fflush(_writePipeFile);
@@ -57,10 +65,13 @@ std::string SendShellCommand(const char* command)
 	{	
 		if(strstr(buf, "pt_shell>") && !first)
 		{
-			first = 1;
 			strncpy(buf, buf+10, strlen(buf));
 			resultString += buf;
-		
+			commandCount--;
+			printf("Count =%d", commandCount);
+			if(commandCount == 0)
+				first = 1;
+			
 		}
 		else if(strstr(buf, "pt_shell>") && first)
 		{
@@ -70,7 +81,8 @@ std::string SendShellCommand(const char* command)
 		else
 		{
 			resultString += buf;
-		}			
+		}	
+		std::cout << buf;
 	}
 	return resultString;
 }
@@ -197,10 +209,29 @@ void add_cstr_cb(Fl_Widget *add_butt, void *data) {
   std::cout << "NOT FULLy IMPLEMENTED";
 }
 int report_handler(std::string selection){
-    // std::cout << "NOT FULLy IMPLEMENTED";
 
+    //remove comment lines
+    
+    std::istringstream iss;
+    iss.str(selection);
+    std::string line;
+    std::string commandString = "";
+    int commandCount = 0;
+    while(std::getline(iss, line))
+    {
+	if(line.find("#") == std::string::npos && line != "")
+	{
+		commandString += line;
+		commandString += "\n";
+		commandCount++;
+	}
+    }
+    if(commandString == "")
+    {
+	commandString = "#";
+    }
     //integrated with pt_shell
-    std::string report_text_str = SendShellCommand(selection.c_str());
+    std::string report_text_str = SendShellCommand(commandString.c_str(), commandCount);
     report_textbuf->text(report_text_str.c_str());
   return 0;
 }

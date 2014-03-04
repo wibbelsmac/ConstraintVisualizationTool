@@ -59,19 +59,12 @@ int main(int argc, char **argv) {
 	FILE* writePipeFile = fdopen(wpipe[1], "w");
 	FILE* readPipeFile = fdopen(rpipe[0], "r");
 	char buf [1024];
-	//char command[100];
 	close(wpipe[0]);
 	close(rpipe[1]);
 	for(int start = 0; start < 10; start++)
 	{
 		fgets(buf, 1024, readPipeFile);
 	}
-	//TODO: Change the run loop function under
-	//while(1)
-	//{
-	//	cin.getline(command,100);
-	//	printf("Output:%s", SendShellCommand(inputFile, outputFile, command).c_str());	
-	//}	
 	
 	init(argc, argv);
 	addPipeFiles(readPipeFile, writePipeFile);
@@ -95,10 +88,4 @@ int main(int argc, char **argv) {
 
     return 0;
 }
-/*
-int main(int argc, char **argv) {
 
-    init(argc, argv);
-    return Fl::run();
-}
-*/
