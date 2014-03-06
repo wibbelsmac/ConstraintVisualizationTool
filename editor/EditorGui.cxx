@@ -67,6 +67,7 @@ ConstrEditorUI::ConstrEditorUI() {
     fileWindow->resizable(fileWindow);
   } // Fl_Double_Window* fileWindow
   { outputWindow = new Fl_Double_Window(539, 856);
+    outputWindow->labelfont(13);
     outputWindow->user_data((void*)(this));
     { constr_output = new Fl_Text_Display(15, 5, 510, 845);
       Fl_Group::current()->resizable(constr_output);

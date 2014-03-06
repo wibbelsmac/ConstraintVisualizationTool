@@ -65,14 +65,14 @@ class ConstrEditorUI {open
       }
     }
     Fl_Window outputWindow {
-      xywh {176 44 539 856} type Double resizable visible
+      xywh {176 44 539 856} type Double labelfont 13 resizable visible
     } {
-      Fl_Text_Display constr_output {
+      Fl_Text_Display constr_output {selected
         xywh {15 5 510 845} resizable hotspot
       }
     }
     Fl_Window constr_add_window {
-      label constr_add_window open selected
+      label constr_add_window open
       xywh {264 300 390 144} type Double
       code0 {int minORmax = 0;} visible
     } {
