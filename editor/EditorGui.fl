@@ -7,21 +7,22 @@ class ConstrEditorUI {open
   Function {ConstrEditorUI()} {open
   } {
     Fl_Window fileWindow {open
-      xywh {261 44 740 854} type Double resizable
+      xywh {665 46 740 854} type Double resizable
       code0 {\#include "EditorBackEnd.h"}
       code1 {\#include "Constr_Text_Editor.h"}
       code2 {\#include "PTShellInput.h"} visible
     } {
       Fl_Text_Editor editor {
-        xywh {10 60 715 725} color 34 textcolor 71
+        xywh {10 60 715 725} color 34 textcolor 71 deactivate
         class ConstrTextEditor
       }
       Fl_Input find_box {
-        callback search_box_callback selected
+        label {Filter:}
+        callback search_box_callback
         xywh {355 26 290 24}
       }
       Fl_Button {} {
-        label Search
+        label Clear
         xywh {655 30 63 20}
       }
       Fl_Menu_Bar menuBar {
@@ -58,6 +59,10 @@ class ConstrEditorUI {open
           xywh {0 0 62 20}
         } {}
       }
+      Fl_Text_Editor {} {
+        xywh {10 790 715 60}
+        class PTShell_Input
+      }
     }
     Fl_Window outputWindow {
       xywh {176 44 539 856} type Double resizable visible
@@ -67,7 +72,7 @@ class ConstrEditorUI {open
       }
     }
     Fl_Window constr_add_window {
-      label constr_add_window open
+      label constr_add_window open selected
       xywh {264 300 390 144} type Double
       code0 {int minORmax = 0;} visible
     } {

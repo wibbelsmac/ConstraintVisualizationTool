@@ -14,6 +14,7 @@ public:
 private:
 	virtual int handle(int e);
 	Constr_Report_Handler report_handler;
+	bool editable;
 };
 
 #endif
