@@ -1,6 +1,6 @@
 #@ # 
 #@ # Running pt_shell Version G-2012.06-SP3 for amd64 -- Oct 19, 2012
-#@ # Date:   Fri Feb 28 15:59:52 2014
+#@ # Date:   Mon Mar  3 23:39:08 2014
 #@ # Run by: williaml@cmos
 #@ 
 
@@ -64,21 +64,5 @@ source /uusoc/facility/cad_common/Synopsys/pts_G-2012.06-SP3/admin/setup/.synops
 #@ 
 #@ # -- End source /uusoc/facility/cad_common/Synopsys/pts_G-2012.06-SP3/admin/setup/.synopsys_pt.setup
 
-set design_dir   "."
-.
-set design_dir   "."
-.
-set mw_power_port  VDD
-.
-set mw_logic1_net  VDD
-.
-set power_enable_analysis TRUE
-.
-read_file -f verilog FFT_4_APR.v
-.
-read_sdc $design_name.dcopt.sdc
-.
-read_parasitics -increment -format SPEF FFT_4.spef
-.
-report_disable_timing >> timing_report.pt.txt
+// "$Id: Fl_Text_Buffer.H 9366 2012-04-21 15:05:00Z fabien $"
 .

@@ -1,4 +1,5 @@
 #include "EditorBackEnd.h"
+#include <sstream>
 #include <iostream>
 #include <fstream>
 
@@ -12,6 +13,7 @@ Fl_Text_Buffer *report_textbuf = 0;
 ConstrEditorUI *edui; 
 static FILE* _readPipeFile;
 static FILE* _writePipeFile;
+static std::string _setupCommand = "";
 
 void init (int argc, char **argv) {
   textbuf = new Fl_Text_Buffer(1024, 128);
@@ -19,6 +21,15 @@ void init (int argc, char **argv) {
   //fl_alert("Argument Count %d with", argc);
   if(argc > 1) {
     load_file(argv[1], 0);
+	//Load in setup tcl script
+   
+	if(argc == 3)
+	{
+		_setupCommand = "source ";
+		_setupCommand += argv[2];
+		_setupCommand += "\n";
+	}
+    
   }
   edui = new ConstrEditorUI;
   //textbuf->add_modify_callback(myCallback, NULL);
@@ -27,22 +38,28 @@ void init (int argc, char **argv) {
   edui->editor->setClickHandler(&report_handler);
   edui->constr_output->buffer(report_textbuf);
   //Initial global objects.
-  edui->fileWindow->label("Mac and Willies DC Puppet");
+  if(argc > 1)	
+  	edui->fileWindow->label(argv[1]);
+  else
+	edui->fileWindow->label("No file loaded");
   edui->outputWindow->label("Mac and Willies DC Puppet");  
   edui->find_box->when(FL_WHEN_CHANGED);
   Fl::visual(FL_DOUBLE|FL_INDEX);
   edui->show(argc, argv);
 
-  
 }
 
 void addPipeFiles(FILE* readPipeFile, FILE* writePipeFile)
 {
 	_readPipeFile = readPipeFile;
 	_writePipeFile = writePipeFile;
+	if(!_setupCommand.empty())
+	{
+		SendShellCommand(_setupCommand.c_str(), 1);
+	}
 }
 
-std::string SendShellCommand(const char* command)
+std::string SendShellCommand(const char* command, int commandCount)
 {
 	char buf [300];
 	int first = 0;
@@ -51,7 +68,9 @@ std::string SendShellCommand(const char* command)
 	   return "You clicked on a comment constraint";
 	else if(strstr(command, ">>"))
 	   return "You clicked on a output to file line";
-	fprintf(_writePipeFile, "%s\n", command);
+
+	std::cout << "Command sent to pt_shell " << command << "\n";
+	fprintf(_writePipeFile, "%s", command);
 	fflush(_writePipeFile);
 	fprintf(_writePipeFile, ".\n");
 	fflush(_writePipeFile);
@@ -59,12 +78,16 @@ std::string SendShellCommand(const char* command)
 	
 	while(fgets(buf, 1024, _readPipeFile))
 	{	
+		std::cout << buf;
 		if(strstr(buf, "pt_shell>") && !first)
 		{
-			first = 1;
 			strncpy(buf, buf+10, strlen(buf));
 			resultString += buf;
-		
+			commandCount--;
+			//printf("Count =%d", commandCount);
+			if(commandCount == 0)
+				first = 1;
+			
 		}
 		else if(strstr(buf, "pt_shell>") && first)
 		{
@@ -74,7 +97,8 @@ std::string SendShellCommand(const char* command)
 		else
 		{
 			resultString += buf;
-		}			
+		}	
+		//std::cout << buf;
 	}
 	return resultString;
 }
@@ -225,11 +249,50 @@ void add_cstr_cb(Fl_Widget *add_butt, void *data) {
   // }
   std::cout << "NOT FULLy IMPLEMENTED";
 }
-int report_handler(std::string selection){
-    // std::cout << "NOT FULLy IMPLEMENTED";
+int report_handler(std::string selection){    
+    std::istringstream iss;
+    iss.str(selection);
+    std::string line;
+    std::string commandString = "";
+    int commandCount = 0;
+    while(std::getline(iss, line))
+    {
+	if(line.find("#") == std::string::npos && line != "")
+	{
+		if(line.find("set_max_delay") != std::string::npos)
+		{
+			size_t next_space = line.find(" ", 14);
+			line.replace(0, next_space, "report_timing -delay max ");
+			commandString += line;
+		}
+		else if(line.find("set_min_delay") != std::string::npos)
+		{
+			size_t next_space = line.find(" ", 14);
+			line.replace(0, next_space, "report_timing -delay min ");
+			commandString += line;
+		}
+		else
+		{
+			commandString += line;
+		}
 
+		commandString += "\n";
+		commandCount++;
+	}
+	
+    }
+    if(commandString.empty())
+    {
+	commandString = "#\n";
+    }
+	//std::cout << "Laste characters are " << commandString[commandString.length()-2] <
+    if( commandString.compare(commandString.length()-2,1,"\\") == 0)
+    {
+	report_textbuf->text("Please enter complete command\n");
+	return 0;
+    }
     //integrated with pt_shell
-    std::string report_text_str = SendShellCommand(selection.c_str());
+    std::string report_text_str = SendShellCommand(commandString.c_str(), commandCount);
     report_textbuf->text(report_text_str.c_str());
   return 0;
 }
