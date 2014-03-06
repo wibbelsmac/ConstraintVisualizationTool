@@ -9,7 +9,7 @@ PTShell_Input::PTShell_Input(int X, int Y, int W, int H, const char* l)
 	exec_handler = 0;
 	buff = new Fl_Text_Buffer();
     buffer(buff);
-    buff->append("dc_shell> ");
+    buff->append("pt_shell> ");
     buff->call_modify_callbacks();
     //textfont(FL_COURIER);
     //textsize(12);
@@ -52,7 +52,7 @@ void PTShell_Input::set_exec_cb(Pt_shell_exec_cb h) {
                     // Execute commands here
                     std::cout << cmd << std::endl;
                     cmd[0] = 0;
-                    append("\ndc_shell> ");
+                    append("\npc_shell> ");
                     return(1);                          // hide 'Enter' from text widget
                 }
                 if ( key == FL_BackSpace ) {

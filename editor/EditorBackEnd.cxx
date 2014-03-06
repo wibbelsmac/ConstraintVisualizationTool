@@ -42,7 +42,7 @@ void init (int argc, char **argv) {
   	edui->fileWindow->label(argv[1]);
   else
 	edui->fileWindow->label("No file loaded");
-  edui->outputWindow->label("Mac and Willies DC Puppet");  
+  edui->outputWindow->label("Mac and Willies PT Puppet");  
   edui->find_box->when(FL_WHEN_CHANGED);
   Fl::visual(FL_DOUBLE|FL_INDEX);
   edui->show(argc, argv);
