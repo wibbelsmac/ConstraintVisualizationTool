@@ -1,5 +1,5 @@
 # data file for the Fltk User Interface Designer (fluid)
-version 1.0302 
+version 1.0109 
 header_name {.h} 
 code_name {.cxx}
 class ConstrEditorUI {open
@@ -7,13 +7,13 @@ class ConstrEditorUI {open
   Function {ConstrEditorUI()} {open
   } {
     Fl_Window fileWindow {open
-      xywh {665 46 740 854} type Double labelfont 4 resizable
+      xywh {538 142 740 775} type Double labelfont 4
       code0 {\#include "EditorBackEnd.h"}
       code1 {\#include "Constr_Text_Editor.h"}
       code2 {\#include "PTShellInput.h"} visible
     } {
       Fl_Text_Editor editor {
-        xywh {10 60 715 725} color 34 labelfont 4 textfont 4 textcolor 71 resizable hotspot
+        xywh {20 60 710 645} color 34 labelfont 4 textfont 4 textcolor 71
         class ConstrTextEditor
       }
       Fl_Input find_box {
@@ -61,15 +61,15 @@ class ConstrEditorUI {open
         } {}
       }
       Fl_Text_Editor pt_shell_input {
-        xywh {10 790 715 60}
+        xywh {20 715 715 60}
         class PTShell_Input
       }
     }
     Fl_Window outputWindow {open
-      xywh {176 44 539 856} type Double labelfont 4 resizable visible
+      xywh {1520 135 535 775} type Double labelfont 4 resizable visible
     } {
       Fl_Text_Display constr_output {
-        xywh {15 5 510 845} labelfont 4 textfont 4 resizable hotspot
+        xywh {15 5 510 845} labelfont 4 textfont 5 resizable hotspot
       }
     }
   }

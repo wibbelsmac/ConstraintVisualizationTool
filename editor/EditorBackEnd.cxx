@@ -244,6 +244,8 @@ void add_cstr_cb(Fl_Widget *add_butt, void *data) {
   std::cout << "NOT FULLy IMPLEMENTED";
 }
 int pt_shell_exec_handler(std::string selection){  
+	std::string report_text_str = SendShellCommand(selection.c_str(), 1);
+    report_textbuf->text(report_text_str.c_str());
   return 0;
 }
 

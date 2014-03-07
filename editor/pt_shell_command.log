@@ -1,6 +1,6 @@
 #@ # 
 #@ # Running pt_shell Version G-2012.06-SP3 for amd64 -- Oct 19, 2012
-#@ # Date:   Wed Mar  5 17:59:22 2014
+#@ # Date:   Fri Mar  7 14:44:27 2014
 #@ # Run by: williaml@cmos
 #@ 
 
@@ -64,6 +64,7 @@ source /uusoc/facility/cad_common/Synopsys/pts_G-2012.06-SP3/admin/setup/.synops
 #@ 
 #@ # -- End source /uusoc/facility/cad_common/Synopsys/pts_G-2012.06-SP3/admin/setup/.synopsys_pt.setup
 
-echo $model_validation_significant_digits
-set model_validation_significant_digits 3
-exit
+hi
+.
+cd ..
+.
