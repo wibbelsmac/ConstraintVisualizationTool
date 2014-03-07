@@ -18,7 +18,7 @@ class ConstrEditorUI {open
       }
       Fl_Input find_box {
         label {Filter:}
-        callback search_box_callback selected
+        callback search_box_callback
         xywh {355 26 290 24}
       }
       Fl_Button {} {
@@ -64,7 +64,7 @@ class ConstrEditorUI {open
         class PTShell_Input
       }
     }
-    Fl_Window outputWindow {open
+    Fl_Window outputWindow {
       xywh {176 44 539 856} type Double labelfont 13 resizable visible
     } {
       Fl_Text_Display constr_output {
@@ -72,7 +72,7 @@ class ConstrEditorUI {open
       }
     }
     Fl_Window constr_add_window {
-      label constr_add_window open
+      label constr_add_window
       xywh {264 300 390 144} type Double
       code0 {int minORmax = 0;} visible
     } {
@@ -95,7 +95,7 @@ class ConstrEditorUI {open
       }
     }
     Fl_Window browser_window {open
-      xywh {839 185 543 596} type Double resizable visible
+      xywh {839 185 543 596} type Double resizable hotspot visible
     } {
       Fl_Browser output_browser {
         xywh {5 5 530 585} resizable hotspot
@@ -105,6 +105,8 @@ class ConstrEditorUI {open
   Function {show(int argc, char **argv)} {open
   } {
     code {fileWindow->show(argc, argv);
-outputWindow->show(argc, argv);} {}
+outputWindow->show(argc, argv);
+browser_window->show(argc, argv);} {selected
+    }
   }
 } 

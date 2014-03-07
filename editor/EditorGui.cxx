@@ -91,6 +91,7 @@ ConstrEditorUI::ConstrEditorUI() {
   } // Fl_Double_Window* constr_add_window
   { browser_window = new Fl_Double_Window(543, 596);
     browser_window->user_data((void*)(this));
+    browser_window->hotspot(browser_window);
     { output_browser = new Fl_Browser(5, 5, 530, 585);
       Fl_Group::current()->resizable(output_browser);
       output_browser->window()->hotspot(output_browser);
@@ -102,4 +103,5 @@ ConstrEditorUI::ConstrEditorUI() {
 void ConstrEditorUI::show(int argc, char **argv) {
   fileWindow->show(argc, argv);
   outputWindow->show(argc, argv);
+  browser_window->show(argc, argv);
 }
