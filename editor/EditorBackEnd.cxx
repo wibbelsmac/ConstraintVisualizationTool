@@ -37,7 +37,6 @@ void init (int argc, char **argv) {
   edui->editor->add_key_binding(114, FL_CTRL,my_key_fun); // code for ctrl + R
   edui->editor->setClickHandler(&report_handler);
   edui->pt_shell_input->set_exec_cb(&report_handler);
-  ((ConstrTextEditor*)(edui->editor))->Editable(false);
   edui->constr_output->buffer(report_textbuf);
   //Initial global objects.
   if(argc > 1)	
@@ -139,7 +138,11 @@ void changed_cb(int, int nInserted, int nDeleted,int, const char*, void* v) {
   if (loading) 
     w->editor->show_insert_position();
 }
-
+void clear_cb(Fl_Button*, void*) {
+  ConstrTextEditor* editor = edui->editor;
+  edui->find_box->value("");
+  editor->clear_filter();
+}
 void open_cstr_cb(Fl_Widget*, void*) {
   if (!check_save()) return;
 

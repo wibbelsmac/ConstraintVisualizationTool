@@ -64,47 +64,35 @@ int ConstrTextEditor::handle(int e) {
 	return return_val;
 }
 
-void ConstrTextEditor::Editable(bool){
-
+void ConstrTextEditor::Editable(bool b){
+	editable = b;
 }
-void ConstrTextEditor::Editable() {
-
+bool ConstrTextEditor::Editable() {
+	return editable;
 }
 
 void ConstrTextEditor::filter_text(std::string filter_box_string) {
   
   std::cout << "in callback" << std::endl;
-  if(!filter_set()) {
+
+  if(filter_set() == false) {
   		std::cout << "New Filter" << std::endl;
-	  orig_buffer = Fl_Text_Editor::buffer();
+		orig_buffer = Fl_Text_Editor::buffer();
   } else {
+  	std::cout << "Modified Filter" << std::endl;
   	filterBuffer->text("");
   }
-
-	  for(int i = 0; i <= orig_buffer->length(); i++) {
-	    char* line_text = orig_buffer->line_text(i);
-	    if(strstr(line_text, filter_box_string.c_str())) {
-	      filterBuffer->append(line_text);
-	      filterBuffer->append("\n");
-	      std::cout << "Line: " << line_text << std::endl;
-	    } else {
-	  	}
-	    i += strlen(line_text) + 1;
-	  }
-	  Fl_Text_Editor::buffer(filterBuffer);
- //  } else if(filter_box_string.find(filter_string) != std::string::npos) {
- //  	std::cout << "Adding to Filter" << std::endl;
- //  	for(int i = 0; i <= filterBuffer->length(); i++) {
- //  		char * line_text = filterBuffer->line_text(i);
-	//     if(strstr(line_text, filter_box_string.c_str())) {
-	//       i += strlen(line_text) + 1;
-	//     } else {
-	//     }
-	//       filterBuffer->replace(i, filterBuffer->line_end(i), "");
-	// }
- //  } else {
- //  	std::cout << "Not Implemented" << std::endl;
- //  }
+  for(int i = 0; i <= orig_buffer->length(); i++) {
+    char* line_text = orig_buffer->line_text(i);
+    if(strstr(line_text, filter_box_string.c_str())) {
+      filterBuffer->append(line_text);
+      filterBuffer->append("\n");
+      std::cout << "Line: " << line_text << std::endl;
+    } else {
+  	}
+    i += strlen(line_text) + 1;
+  }
+  Fl_Text_Editor::buffer(filterBuffer);
   editable = false;
   std::cout << "buffer" << filterBuffer->text() << std::endl;
 }
@@ -113,7 +101,8 @@ bool ConstrTextEditor::filter_set() {
 	return !editable;
 }
 void ConstrTextEditor::clear_filter() {
-	Fl_Text_Editor::buffer(orig_buffer);
+	if(orig_buffer != NULL)
+		Fl_Text_Editor::buffer(orig_buffer);
 	editable = true;
 }
 

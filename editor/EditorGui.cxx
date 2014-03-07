@@ -48,7 +48,8 @@ ConstrEditorUI::ConstrEditorUI() {
     { find_box = new Fl_Input(355, 26, 290, 24, "Filter:");
       find_box->callback((Fl_Callback*)search_box_callback);
     } // Fl_Input* find_box
-    { new Fl_Button(655, 30, 63, 20, "Clear");
+    { Fl_Button* o = new Fl_Button(655, 30, 63, 20, "Clear");
+      o->callback((Fl_Callback*)clear_cb);
     } // Fl_Button* o
     { menuBar = new Fl_Menu_Bar(0, 0, 740, 20, "menuBar");
       menuBar->menu(menu_menuBar);
@@ -75,24 +76,10 @@ ConstrEditorUI::ConstrEditorUI() {
     } // Fl_Text_Display* constr_output
     outputWindow->end();
   } // Fl_Double_Window* outputWindow
-  { constr_add_window = new Fl_Double_Window(390, 144, "constr_add_window");
-    constr_add_window->user_data((void*)(this));
-    { from_pin_box = new Fl_Input(65, 46, 270, 27, "-from pin");
-    } // Fl_Input* from_pin_box
-    { to_pin_box = new Fl_Input(65, 81, 270, 24, "-to Pin");
-    } // Fl_Input* to_pin_box
-    { Fl_Button* o = new Fl_Button(75, 110, 208, 20, "Add Constraint");
-      o->callback((Fl_Callback*)add_cstr_cb);
-    } // Fl_Button* o
-    { delay_box = new Fl_Input(65, 16, 270, 24, "Delay");
-    } // Fl_Input* delay_box
-    int minORmax = 0;
-    constr_add_window->end();
-  } // Fl_Double_Window* constr_add_window
   { browser_window = new Fl_Double_Window(543, 596);
     browser_window->user_data((void*)(this));
     browser_window->hotspot(browser_window);
-    { output_browser = new Fl_Browser(5, 5, 530, 585);
+    { output_browser = new Fl_Browser(5, 15, 530, 575);
       Fl_Group::current()->resizable(output_browser);
       output_browser->window()->hotspot(output_browser);
     } // Fl_Browser* output_browser

@@ -12,10 +12,11 @@ public:
 	ConstrTextEditor(int X, int Y, int W, int H, const char* l = 0);
 	void setClickHandler(Constr_Report_Handler h);
 	void Editable(bool);
-	void Editable();
+	bool Editable();
 	void filter_text(std::string filter_string);
 	bool filter_set();
 	void clear_filter();
+	void clear_cb(Fl_Widget*, void*);
 private:
 	virtual int handle(int e);
 	Constr_Report_Handler report_handler;

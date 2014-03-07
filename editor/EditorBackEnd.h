@@ -32,6 +32,7 @@ void init (int argc, char **argv);
 int my_key_fun (int key, Fl_Text_Editor *editor);
 void add_cstr_cb(Fl_Widget *add_butt, void *data);
 void open_cstr_cb(Fl_Widget*, void*);
+void clear_cb(Fl_Button*, void*);
 void open_tcl_cb(Fl_Widget*, void*);
 int clck_handler (int event);
 int report_handler(std::string selection);

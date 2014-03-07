@@ -23,6 +23,7 @@ class ConstrEditorUI {open
       }
       Fl_Button {} {
         label Clear
+        callback clear_cb
         xywh {655 30 63 20}
       }
       Fl_Menu_Bar menuBar {
@@ -30,7 +31,7 @@ class ConstrEditorUI {open
         xywh {0 0 740 20}
       } {
         Submenu {} {
-          label File
+          label File open
           xywh {0 0 62 20}
         } {
           MenuItem {} {
@@ -40,7 +41,7 @@ class ConstrEditorUI {open
           }
           MenuItem {} {
             label {Open .tcl}
-            callback open_tcl_cb
+            callback open_tcl_cb selected
             xywh {5 5 31 20}
           }
           MenuItem {} {
@@ -59,7 +60,7 @@ class ConstrEditorUI {open
           xywh {0 0 62 20}
         } {}
       }
-      Fl_Text_Editor pt_shell_input {selected
+      Fl_Text_Editor pt_shell_input {
         xywh {10 790 715 60}
         class PTShell_Input
       }
@@ -71,34 +72,11 @@ class ConstrEditorUI {open
         xywh {15 5 510 845} resizable hotspot
       }
     }
-    Fl_Window constr_add_window {
-      label constr_add_window
-      xywh {264 300 390 144} type Double
-      code0 {int minORmax = 0;} visible
-    } {
-      Fl_Input from_pin_box {
-        label {-from pin}
-        xywh {65 46 270 27}
-      }
-      Fl_Input to_pin_box {
-        label {-to Pin}
-        xywh {65 81 270 24}
-      }
-      Fl_Button {} {
-        label {Add Constraint}
-        callback add_cstr_cb
-        xywh {75 110 208 20}
-      }
-      Fl_Input delay_box {
-        label Delay
-        xywh {65 16 270 24}
-      }
-    }
     Fl_Window browser_window {open
       xywh {839 185 543 596} type Double resizable hotspot visible
     } {
       Fl_Browser output_browser {
-        xywh {5 5 530 585} resizable hotspot
+        xywh {5 15 530 575} resizable hotspot
       }
     }
   }
