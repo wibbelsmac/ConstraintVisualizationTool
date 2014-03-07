@@ -112,10 +112,10 @@ void load_file(char *newfile, int ipos) {
   if (!insert) strcpy(filename, "");
   int r;
   if (!insert) {
-    edui->editor->clear_filter();
+    //edui->editor->clear_filter();
       r = textbuf->loadfile(newfile);
   } else {
-    edui->editor->clear_filter();
+    //edui->editor->clear_filter();
     r = textbuf->insertfile(newfile, ipos);
     // std::ifstream is (newfile, std::ifstream::binary);
     // if (is) {
