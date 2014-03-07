@@ -30,15 +30,17 @@ Fl_Menu_Item ConstrEditorUI::menu_menuBar[] = {
 
 ConstrEditorUI::ConstrEditorUI() {
   { fileWindow = new Fl_Double_Window(740, 854);
+    fileWindow->labelfont(4);
     fileWindow->user_data((void*)(this));
     { editor = new ConstrTextEditor(10, 60, 715, 725);
       editor->box(FL_DOWN_FRAME);
       editor->color((Fl_Color)34);
       editor->selection_color(FL_SELECTION_COLOR);
       editor->labeltype(FL_NORMAL_LABEL);
-      editor->labelfont(0);
+      editor->labelfont(4);
       editor->labelsize(14);
       editor->labelcolor(FL_FOREGROUND_COLOR);
+      editor->textfont(4);
       editor->textcolor((Fl_Color)71);
       editor->align(Fl_Align(FL_ALIGN_TOP));
       editor->when(FL_WHEN_RELEASE);
@@ -68,27 +70,19 @@ ConstrEditorUI::ConstrEditorUI() {
     fileWindow->end();
   } // Fl_Double_Window* fileWindow
   { outputWindow = new Fl_Double_Window(539, 856);
-    outputWindow->labelfont(13);
+    outputWindow->labelfont(4);
     outputWindow->user_data((void*)(this));
     { constr_output = new Fl_Text_Display(15, 5, 510, 845);
+      constr_output->labelfont(4);
+      constr_output->textfont(4);
       Fl_Group::current()->resizable(constr_output);
       constr_output->window()->hotspot(constr_output);
     } // Fl_Text_Display* constr_output
     outputWindow->end();
   } // Fl_Double_Window* outputWindow
-  { browser_window = new Fl_Double_Window(543, 596);
-    browser_window->user_data((void*)(this));
-    browser_window->hotspot(browser_window);
-    { output_browser = new Fl_Browser(5, 15, 530, 575);
-      Fl_Group::current()->resizable(output_browser);
-      output_browser->window()->hotspot(output_browser);
-    } // Fl_Browser* output_browser
-    browser_window->end();
-  } // Fl_Double_Window* browser_window
 }
 
 void ConstrEditorUI::show(int argc, char **argv) {
   fileWindow->show(argc, argv);
   outputWindow->show(argc, argv);
-  browser_window->show(argc, argv);
 }

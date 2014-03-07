@@ -7,13 +7,13 @@ class ConstrEditorUI {open
   Function {ConstrEditorUI()} {open
   } {
     Fl_Window fileWindow {open
-      xywh {665 46 740 854} type Double resizable
+      xywh {665 46 740 854} type Double labelfont 4 resizable
       code0 {\#include "EditorBackEnd.h"}
       code1 {\#include "Constr_Text_Editor.h"}
       code2 {\#include "PTShellInput.h"} visible
     } {
       Fl_Text_Editor editor {
-        xywh {10 60 715 725} color 34 textcolor 71 resizable hotspot
+        xywh {10 60 715 725} color 34 labelfont 4 textfont 4 textcolor 71 resizable hotspot
         class ConstrTextEditor
       }
       Fl_Input find_box {
@@ -41,7 +41,7 @@ class ConstrEditorUI {open
           }
           MenuItem {} {
             label {Open .tcl}
-            callback open_tcl_cb selected
+            callback open_tcl_cb
             xywh {5 5 31 20}
           }
           MenuItem {} {
@@ -65,25 +65,17 @@ class ConstrEditorUI {open
         class PTShell_Input
       }
     }
-    Fl_Window outputWindow {
-      xywh {176 44 539 856} type Double labelfont 13 resizable visible
+    Fl_Window outputWindow {open
+      xywh {176 44 539 856} type Double labelfont 4 resizable visible
     } {
       Fl_Text_Display constr_output {
-        xywh {15 5 510 845} resizable hotspot
-      }
-    }
-    Fl_Window browser_window {open
-      xywh {839 185 543 596} type Double resizable hotspot visible
-    } {
-      Fl_Browser output_browser {
-        xywh {5 15 530 575} resizable hotspot
+        xywh {15 5 510 845} labelfont 4 textfont 4 resizable hotspot
       }
     }
   }
   Function {show(int argc, char **argv)} {open
   } {
     code {fileWindow->show(argc, argv);
-outputWindow->show(argc, argv);
-browser_window->show(argc, argv);} {}
+outputWindow->show(argc, argv);} {}
   }
 } 

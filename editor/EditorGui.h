@@ -15,7 +15,6 @@ extern void clear_cb(Fl_Button*, void*);
 extern void open_cstr_cb(Fl_Menu_*, void*);
 extern void open_tcl_cb(Fl_Menu_*, void*);
 #include <FL/Fl_Text_Display.H>
-#include <FL/Fl_Browser.H>
 
 class ConstrEditorUI {
 public:
@@ -34,8 +33,6 @@ public:
   PTShell_Input *pt_shell_input;
   Fl_Double_Window *outputWindow;
   Fl_Text_Display *constr_output;
-  Fl_Double_Window *browser_window;
-  Fl_Browser *output_browser;
   void show(int argc, char **argv);
 };
 #endif
