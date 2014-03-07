@@ -15,6 +15,7 @@ extern void open_cstr_cb(Fl_Menu_*, void*);
 extern void open_tcl_cb(Fl_Menu_*, void*);
 #include <FL/Fl_Text_Display.H>
 extern void add_cstr_cb(Fl_Button*, void*);
+#include <FL/Fl_Browser.H>
 
 class ConstrEditorUI {
 public:
@@ -36,6 +37,7 @@ public:
   Fl_Input *from_pin_box;
   Fl_Input *to_pin_box;
   Fl_Input *delay_box;
+  Fl_Browser *output_browser;
   void show(int argc, char **argv);
 };
 #endif

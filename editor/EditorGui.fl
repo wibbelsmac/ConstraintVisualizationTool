@@ -12,7 +12,7 @@ class ConstrEditorUI {open
       code1 {\#include "Constr_Text_Editor.h"}
       code2 {\#include "PTShellInput.h"} visible
     } {
-      Fl_Text_Editor editor {selected
+      Fl_Text_Editor editor {
         xywh {10 60 715 725} color 34 textcolor 71 resizable hotspot
         class ConstrTextEditor
       }
@@ -64,7 +64,7 @@ class ConstrEditorUI {open
         class PTShell_Input
       }
     }
-    Fl_Window outputWindow {
+    Fl_Window outputWindow {open
       xywh {176 44 539 856} type Double labelfont 13 resizable visible
     } {
       Fl_Text_Display constr_output {
@@ -92,6 +92,13 @@ class ConstrEditorUI {open
       Fl_Input delay_box {
         label Delay
         xywh {65 16 270 24}
+      }
+    }
+    Fl_Window {} {open
+      xywh {839 185 543 596} type Double resizable visible
+    } {
+      Fl_Browser output_browser {selected
+        xywh {5 5 530 585} resizable hotspot
       }
     }
   }
