@@ -42,7 +42,8 @@ ConstrEditorUI::ConstrEditorUI() {
       editor->textcolor((Fl_Color)71);
       editor->align(Fl_Align(FL_ALIGN_TOP));
       editor->when(FL_WHEN_RELEASE);
-      editor->deactivate();
+      Fl_Group::current()->resizable(editor);
+      editor->window()->hotspot(editor);
     } // ConstrTextEditor* editor
     { find_box = new Fl_Input(355, 26, 290, 24, "Filter:");
       find_box->callback((Fl_Callback*)search_box_callback);
@@ -64,7 +65,6 @@ ConstrEditorUI::ConstrEditorUI() {
       o->when(FL_WHEN_RELEASE);
     } // PTShell_Input* o
     fileWindow->end();
-    fileWindow->resizable(fileWindow);
   } // Fl_Double_Window* fileWindow
   { outputWindow = new Fl_Double_Window(539, 856);
     outputWindow->labelfont(13);

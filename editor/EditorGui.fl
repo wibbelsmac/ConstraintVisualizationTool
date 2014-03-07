@@ -12,8 +12,8 @@ class ConstrEditorUI {open
       code1 {\#include "Constr_Text_Editor.h"}
       code2 {\#include "PTShellInput.h"} visible
     } {
-      Fl_Text_Editor editor {
-        xywh {10 60 715 725} color 34 textcolor 71 deactivate
+      Fl_Text_Editor editor {selected
+        xywh {10 60 715 725} color 34 textcolor 71 resizable hotspot
         class ConstrTextEditor
       }
       Fl_Input find_box {
@@ -67,7 +67,7 @@ class ConstrEditorUI {open
     Fl_Window outputWindow {
       xywh {176 44 539 856} type Double labelfont 13 resizable visible
     } {
-      Fl_Text_Display constr_output {selected
+      Fl_Text_Display constr_output {
         xywh {15 5 510 845} resizable hotspot
       }
     }

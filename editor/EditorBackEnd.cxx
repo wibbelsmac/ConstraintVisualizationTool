@@ -1,4 +1,5 @@
 #include "EditorBackEnd.h"
+#include "Constr_Text_Editor.h"
 #include <sstream>
 #include <iostream>
 #include <fstream>
@@ -36,6 +37,7 @@ void init (int argc, char **argv) {
   edui->editor->buffer(textbuf);
   edui->editor->add_key_binding(114, FL_CTRL,my_key_fun); // code for ctrl + R
   edui->editor->setClickHandler(&report_handler);
+  ((ConstrTextEditor*)(edui->editor))->Editable(false);
   edui->constr_output->buffer(report_textbuf);
   //Initial global objects.
   if(argc > 1)	
@@ -110,8 +112,10 @@ void load_file(char *newfile, int ipos) {
   if (!insert) strcpy(filename, "");
   int r;
   if (!insert) {
+    edui->editor->clear_filter();
       r = textbuf->loadfile(newfile);
   } else {
+    edui->editor->clear_filter();
     r = textbuf->insertfile(newfile, ipos);
     // std::ifstream is (newfile, std::ifstream::binary);
     // if (is) {
@@ -213,19 +217,15 @@ void saveas_cb(void) {
   if (newfile != NULL) save_file(newfile);
 }
 void search_box_callback(Fl_Widget *, void *) {
-
-  std::cout << "in callback" << std::endl;
-  for(int i = 0; i <= textbuf->length(); i++) {
-    char* line_text = textbuf->line_text(i);
-    
-    if(strstr(line_text, edui->find_box->value())) {
-      std::cout << "line Text: " << line_text << std::endl;  
-    } else {
-      textbuf->skip_displayed_characters(i, strlen(line_text));
-      textbuf->call_modify_callbacks ();
-    }
-    i += strlen(line_text) + 1;
+  ConstrTextEditor* editor = edui->editor;
+  if(!strcmp(edui->find_box->value(), "")) {
+    editor->clear_filter();
+  }else {
+    std::string s(edui->find_box->value());
+    editor->filter_text(s);
   }
+
+
 }
 
 void myCallback(int pos, int nInserted, int nDeleted,
