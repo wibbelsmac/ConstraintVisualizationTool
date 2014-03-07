@@ -37,6 +37,7 @@ public:
   Fl_Input *from_pin_box;
   Fl_Input *to_pin_box;
   Fl_Input *delay_box;
+  Fl_Double_Window *browser_window;
   Fl_Browser *output_browser;
   void show(int argc, char **argv);
 };

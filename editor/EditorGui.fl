@@ -18,7 +18,7 @@ class ConstrEditorUI {open
       }
       Fl_Input find_box {
         label {Filter:}
-        callback search_box_callback
+        callback search_box_callback selected
         xywh {355 26 290 24}
       }
       Fl_Button {} {
@@ -94,10 +94,10 @@ class ConstrEditorUI {open
         xywh {65 16 270 24}
       }
     }
-    Fl_Window {} {open
+    Fl_Window browser_window {open
       xywh {839 185 543 596} type Double resizable visible
     } {
-      Fl_Browser output_browser {selected
+      Fl_Browser output_browser {
         xywh {5 5 530 585} resizable hotspot
       }
     }

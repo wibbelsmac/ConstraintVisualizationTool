@@ -89,15 +89,14 @@ ConstrEditorUI::ConstrEditorUI() {
     int minORmax = 0;
     constr_add_window->end();
   } // Fl_Double_Window* constr_add_window
-  { Fl_Double_Window* o = new Fl_Double_Window(543, 596);
-    w = o;
-    o->user_data((void*)(this));
+  { browser_window = new Fl_Double_Window(543, 596);
+    browser_window->user_data((void*)(this));
     { output_browser = new Fl_Browser(5, 5, 530, 585);
       Fl_Group::current()->resizable(output_browser);
       output_browser->window()->hotspot(output_browser);
     } // Fl_Browser* output_browser
-    o->end();
-  } // Fl_Double_Window* o
+    browser_window->end();
+  } // Fl_Double_Window* browser_window
 }
 
 void ConstrEditorUI::show(int argc, char **argv) {
