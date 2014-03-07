@@ -33,10 +33,10 @@ void init (int argc, char **argv) {
     
   }
   edui = new ConstrEditorUI;
-  //textbuf->add_modify_callback(myCallback, NULL);
   edui->editor->buffer(textbuf);
   edui->editor->add_key_binding(114, FL_CTRL,my_key_fun); // code for ctrl + R
   edui->editor->setClickHandler(&report_handler);
+  edui->pt_shell_input->set_exec_cb(&report_handler);
   ((ConstrTextEditor*)(edui->editor))->Editable(false);
   edui->constr_output->buffer(report_textbuf);
   //Initial global objects.
@@ -228,15 +228,6 @@ void search_box_callback(Fl_Widget *, void *) {
 
 }
 
-void myCallback(int pos, int nInserted, int nDeleted,
-      int nRestyled, const char* deletedText,
-      void* cbArg) {
-  //if(edui->editor->event_clicks() != 0) {
-    int linenum = textbuf->count_lines(0, pos);
-    std::cout << "NEW Selection on line %d" << linenum << "\n";
-   // std::cout << "Key Pressed" <<Fl::event_key();
-  //}
-}
 int my_key_fun (int key, Fl_Text_Editor *editor) {
   return 1;
 }
@@ -249,6 +240,10 @@ void add_cstr_cb(Fl_Widget *add_butt, void *data) {
   // }
   std::cout << "NOT FULLy IMPLEMENTED";
 }
+int pt_shell_exec_handler(std::string selection){  
+  return 0;
+}
+
 int report_handler(std::string selection){    
     std::istringstream iss;
     iss.str(selection);

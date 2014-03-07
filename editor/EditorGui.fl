@@ -59,7 +59,7 @@ class ConstrEditorUI {open
           xywh {0 0 62 20}
         } {}
       }
-      Fl_Text_Editor {} {
+      Fl_Text_Editor pt_shell_input {selected
         xywh {10 790 715 60}
         class PTShell_Input
       }
@@ -106,7 +106,6 @@ class ConstrEditorUI {open
   } {
     code {fileWindow->show(argc, argv);
 outputWindow->show(argc, argv);
-browser_window->show(argc, argv);} {selected
-    }
+browser_window->show(argc, argv);} {}
   }
 } 

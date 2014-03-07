@@ -48,8 +48,12 @@ void PTShell_Input::set_exec_cb(Pt_shell_exec_cb h) {
             case FL_KEYDOWN: {
                 int key = Fl::event_key();
                 // Enter key? Execute the command, clear command buffer
-                if ( key == FL_Enter ) {
+                if (key == FL_Enter ) {
                     // Execute commands here
+                    if(exec_handler != NULL) {
+                        std::string temp_str(cmd);
+                        (*exec_handler)(temp_str);
+                    }
                     std::cout << cmd << std::endl;
                     cmd[0] = 0;
                     append("\npc_shell> ");

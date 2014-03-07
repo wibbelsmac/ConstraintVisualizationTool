@@ -31,6 +31,7 @@ private:
   inline void cb_SaveAs_i(Fl_Menu_*, void*);
   static void cb_SaveAs(Fl_Menu_*, void*);
 public:
+  PTShell_Input *pt_shell_input;
   Fl_Double_Window *outputWindow;
   Fl_Text_Display *constr_output;
   Fl_Double_Window *constr_add_window;

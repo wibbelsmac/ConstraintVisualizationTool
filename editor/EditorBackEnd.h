@@ -29,9 +29,6 @@ void save_cb(void);
 void save_file(char *newfile);
 void saveas_cb(void);
 void init (int argc, char **argv);
-void myCallback(int pos, int nInserted, int nDeleted,
-      int nRestyled, const char* deletedText,
-      void* cbArg);
 int my_key_fun (int key, Fl_Text_Editor *editor);
 void add_cstr_cb(Fl_Widget *add_butt, void *data);
 void open_cstr_cb(Fl_Widget*, void*);
@@ -41,5 +38,6 @@ int report_handler(std::string selection);
 void addPipeFiles(FILE* readPipeFile, FILE* writePipeFile);
 std::string SendShellCommand(const char* command, int commandCount);
 void search_box_callback(Fl_Widget *, void *);
+int pt_shell_exec_handler(std::string selection);
 
 #endif

@@ -53,17 +53,17 @@ ConstrEditorUI::ConstrEditorUI() {
     { menuBar = new Fl_Menu_Bar(0, 0, 740, 20, "menuBar");
       menuBar->menu(menu_menuBar);
     } // Fl_Menu_Bar* menuBar
-    { PTShell_Input* o = new PTShell_Input(10, 790, 715, 60);
-      o->box(FL_DOWN_FRAME);
-      o->color(FL_BACKGROUND2_COLOR);
-      o->selection_color(FL_SELECTION_COLOR);
-      o->labeltype(FL_NORMAL_LABEL);
-      o->labelfont(0);
-      o->labelsize(14);
-      o->labelcolor(FL_FOREGROUND_COLOR);
-      o->align(Fl_Align(FL_ALIGN_TOP));
-      o->when(FL_WHEN_RELEASE);
-    } // PTShell_Input* o
+    { pt_shell_input = new PTShell_Input(10, 790, 715, 60);
+      pt_shell_input->box(FL_DOWN_FRAME);
+      pt_shell_input->color(FL_BACKGROUND2_COLOR);
+      pt_shell_input->selection_color(FL_SELECTION_COLOR);
+      pt_shell_input->labeltype(FL_NORMAL_LABEL);
+      pt_shell_input->labelfont(0);
+      pt_shell_input->labelsize(14);
+      pt_shell_input->labelcolor(FL_FOREGROUND_COLOR);
+      pt_shell_input->align(Fl_Align(FL_ALIGN_TOP));
+      pt_shell_input->when(FL_WHEN_RELEASE);
+    } // PTShell_Input* pt_shell_input
     fileWindow->end();
   } // Fl_Double_Window* fileWindow
   { outputWindow = new Fl_Double_Window(539, 856);
